@@ -10,8 +10,8 @@ export abstract class Common extends ContainerView {
 
 export abstract class CommonSVGElement extends ContainerView {
   id: string;
-  children: { name: string, view: View }[] = []
-  public _addChildFromBuilder(name: string, view: View): void {
+  children: { name: string, view: CommonSVGElement }[] = []
+  public _addChildFromBuilder(name: string, view: CommonSVGElement): void {
     this.children.push({ name, view })
   }
   constructor() {

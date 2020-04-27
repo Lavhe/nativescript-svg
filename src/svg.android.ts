@@ -12,30 +12,29 @@ export class Svg extends Common {
     }
 
     public buildSVGString(name: string, view: CommonSVGElement): void {
+        if (!this.svgString.some(v => v.indexOf(`_id="${view.id}"`) >= 0)) {
+            this.svgString.push(this.digDeep(name, view));
+        }
+        this.refreshSVG();
+    }
+
+    public digDeep(name: string, view: CommonSVGElement): string {
         const attrs = SVG_ATTRIBUTES.reduce((a, b) => {
             if (view.get(b)) {
                 a += `${b}="${view.get(b)}" `
             }
             return a;
         }, '');
-        console.log("This is a child of a child .... ", view.children);
-        if (!this.svgString.some(v => v.indexOf(`_id="${view.id}"`) >= 0)) {
-            this.svgString.push(`<${name.toLowerCase()} ${attrs} _id="${view.id}"/>`);
-        }
-        this.refreshSVG();
-    }
-
-    public digDeep(child: CommonSVGElement): string {
-        if (child.children.length == 0) {
-
+        if (view.children.length == 0) {
+            return `<${name.toLowerCase()} ${attrs} _id="${view.id}"></${name.toLowerCase()}>`
         } else {
-
+            return `<${name.toLowerCase()} ${attrs} _id="${view.id}">${view.children.reduce((a, b) => a + this.digDeep(b.name, b.view), '')}</${name.toLowerCase()}>`;
         }
     }
 
     public refreshSVG() {
         if (this.nativeView) {
-            const svg = `<svg height="100" width="100">${this.svgString.join(" ")}</svg>`
+            const svg = `<svg height="100%" width="100%">${this.svgString.join(" ")}</svg>`
             console.log('The SVG', svg);
             this.nativeView.setSVG(com.caverock.androidsvg.SVG.getFromString(svg));
         }

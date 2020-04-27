@@ -13,6 +13,14 @@
             stroke-width="3"
             fill="red"
           />
+          <circle
+            cx="0"
+            cy="10"
+            r="20"
+            stroke="yellow"
+            stroke-width="1"
+            fill="black"
+          />
         </g>
         <circle
           cx="20"
