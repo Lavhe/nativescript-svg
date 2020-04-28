@@ -20,7 +20,7 @@ export class Svg extends Common {
 
     public digDeep(name: string, view: CommonSVGElement): string {
         const attrs = SVG_ATTRIBUTES.reduce((a, b) => {
-            if (view.get(b)) {
+            if (view.get(b) != null && view.get(b) != 'auto') {
                 a += `${b}="${view.get(b)}" `
             }
             return a;
@@ -59,5 +59,8 @@ export class Line extends CommonSVGElement {
 
 }
 export class G extends CommonSVGElement {
+
+}
+export class Rect extends CommonSVGElement {
 
 }
