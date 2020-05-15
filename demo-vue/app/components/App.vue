@@ -31,13 +31,23 @@
           fill="blue"
         ></circle>
         <rect
-          :x1="rect.x1"
-          :x2="rect.x2"
-          :y1="rect.y1"
-          :y2="rect.y2"
+          :x="rect.x1"
+          :y="rect.x2"
+          :width="200"
+          :height="200"
           stroke="green"
           stroke-width="1"
           fill="orange"
+        ></rect>
+        <rect
+          :x="rect.x2 - 100"
+          :y="rect.x1"
+          :width="100"
+          :height="rect.y1"
+          rx="15"
+          stroke="orange"
+          stroke-width="1"
+          fill="purple"
         ></rect>
         <line
           :x1="line.x1"
@@ -63,21 +73,21 @@ export default {
   data() {
     return {
       circle: {
-        cx: 20,
-        cy: 20,
+        cx: 200,
+        cy: 200,
         r: 50
       },
       rect: {
-        x1: 0,
-        x2: 100,
-        y1: 0,
-        y2: 200
+        x1: 100,
+        x2: 400,
+        y1: 100,
+        y2: 400
       },
       line: {
         x1: 0,
-        x2: 100,
+        x2: 500,
         y1: 0,
-        y2: 200
+        y2: 500
       },
       isAnimating: false,
       timer: null
@@ -105,6 +115,7 @@ export default {
 
         this.rect.x1 <= 0 ? (this.line.x1 = 600) : (this.line.x1 -= 5);
         this.rect.y1 <= 0 ? (this.line.y1 = 600) : (this.line.y1 -= 5);
+        this.$forceUpdate();
       }, 700);
     },
     stopAnimation() {
